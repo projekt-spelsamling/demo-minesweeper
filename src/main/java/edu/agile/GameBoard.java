@@ -36,7 +36,7 @@ public class GameBoard extends Application {
                 Tile tile = new Tile(x,y,Math.random() < 0.2);
 
                 grid[x][y] = tile;
-                root.getChildren().addAll(tile);
+                root.getChildren().add(tile);
             }
         }
 
@@ -51,7 +51,7 @@ public class GameBoard extends Application {
 
                 long bombs = getNeighbors(tile).stream().filter(t -> t.hasBomb).count();
 
-                if(bombs < 0){
+                if(bombs > 0){
                     tile.text.setText(String.valueOf(bombs));
                 }
 
