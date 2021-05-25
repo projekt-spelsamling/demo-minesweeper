@@ -8,7 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
-public class Menu {
+public class Menu{
 
     @FXML
     public Button startButton;
@@ -18,6 +18,29 @@ public class Menu {
 
     @FXML
     public Button exitButton;
+
+
+
+    @FXML
+    public void startButtonAction(MouseEvent event){
+        if (event.getSource() == startButton) {
+            try {
+                Parent root = FXMLLoader.load(getClass().getResource("/Pane.fxml"));
+
+                Scene scene = new Scene(root);
+                Stage stage = new Stage();
+                stage.setScene(scene);
+                Stage stage2 = (Stage) exitButton.getScene().getWindow();
+                stage2.close();
+                stage.show();
+
+
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
     @FXML
     public void customButtonAction(MouseEvent event) {
