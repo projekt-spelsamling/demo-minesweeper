@@ -16,9 +16,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws Exception{
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/Menu.fxml"));
-        Parent root = loader.load();
+        Parent root = FXMLLoader.load(getClass().getResource("/Menu.fxml"));
 
 
         Scene scene = new Scene(root);
