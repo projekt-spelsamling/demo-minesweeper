@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.layout.Pane?>
 
-
-<Pane fx:id="menuPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="472.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.agile.Controllers.GameBoard">
+<Pane fx:id="menuPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="472.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Pane fx:id="gamePane" layoutY="25.0" prefHeight="447.0" prefWidth="600.0" />
       <MenuBar>
@@ -19,5 +20,8 @@
           </Menu>
         </menus>
       </MenuBar>
+      <Label fx:id="pointLabel" layoutX="123.0" layoutY="2.0" prefHeight="25.0" prefWidth="89.0" />
+      <Button fx:id="restartButton" layoutX="63.0" mnemonicParsing="false" text="Restart" />
+      <Label fx:id="gameLabel" layoutX="212.0" layoutY="2.0" prefHeight="25.0" prefWidth="89.0" />
    </children>
 </Pane>

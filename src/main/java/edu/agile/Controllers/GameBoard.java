@@ -1,13 +1,18 @@
 package edu.agile.Controllers;
 
+import edu.agile.Models.Difficulty;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -36,23 +41,43 @@ public class GameBoard implements Initializable {
     @FXML
     public MenuItem menuButton;
 
+    @FXML
+    public Button restartButton;
+
+    @FXML
+    public Label pointLabel;
+
+    @FXML
+    public Label gameLabel;
+
 
     private static final int TILE_SIZE = 40;
-    private static final int WINDOW_WIDTH = 800;
-    private static final int GAME_HEIGHT = 600;
+    private final int WINDOW_WIDTH;
+    private final int GAME_HEIGHT;
     private static final int MENU_HEIGHT = 25;
 
-    private static final int X_TILES = WINDOW_WIDTH / TILE_SIZE;
-    private static final int Y_TILES = GAME_HEIGHT / TILE_SIZE;
+    private final int X_TILES;
+    private final int Y_TILES;
 
 
-    private final Tile[][] grid = new Tile[X_TILES][Y_TILES];
+    private final Tile[][] grid;
     private Scene scene;
 
     public int bombs = 0;
     public int flaggedBombs = 0;
     public boolean gameOver = false;
     public int score = 0;
+
+    public Difficulty difficulty;
+
+    public GameBoard(Difficulty difficulty) {
+        this.difficulty = difficulty;
+        this.WINDOW_WIDTH = difficulty.getWidth();
+        this.GAME_HEIGHT = difficulty.getHeight();
+        this.X_TILES = WINDOW_WIDTH / TILE_SIZE;
+        this.Y_TILES = GAME_HEIGHT / TILE_SIZE;
+        this.grid = new Tile[X_TILES][Y_TILES];
+    }
 
     private Parent createContent() {
         gamePane.setPrefSize(WINDOW_WIDTH, GAME_HEIGHT);
@@ -118,13 +143,14 @@ public class GameBoard implements Initializable {
     }
 
     private class Tile extends StackPane {
-        private int x, y;
+        private final int x;
+        private final int y;
         private final boolean hasBomb;
         private boolean isOpen = false;
         private boolean isFlagged;
 
-        private Rectangle border = new Rectangle(TILE_SIZE - 2, TILE_SIZE - 2);
-        private Text text = new Text();
+        private final Rectangle border = new Rectangle(TILE_SIZE - 2, TILE_SIZE - 2);
+        private final Text text = new Text();
 
         public Tile(int x, int y, boolean hasBomb, boolean isFlagged) {
             this.x = x;
@@ -159,17 +185,6 @@ public class GameBoard implements Initializable {
                     }
                 }
             });
-        }
-
-        private void reload() throws IOException {
-            Parent root = FXMLLoader.load(getClass().getResource("/Pane.fxml"));
-
-            Scene scene = new Scene(root);
-            Stage stage = new Stage();
-            stage.setScene(scene);
-            Stage stage2 = (Stage) gamePane.getScene().getWindow();
-            stage2.close();
-            stage.show();
         }
 
         public void open() {
@@ -217,13 +232,20 @@ public class GameBoard implements Initializable {
 
         public void gameOver() {
             gameOver = true;
-            getNeighbors(this).forEach(Tile::open);
+            pointLabel.setTextFill(Color.GREEN);
+            pointLabel.setText("Score: " + score);
+            gameLabel.setTextFill(Color.TOMATO);
+            gameLabel.setText("Game Over");
             System.out.println("Score: " + score);
             System.out.println("Game Over");
         }
 
         public void win() {
             gameOver = true;
+            pointLabel.setTextFill(Color.GREEN);
+            pointLabel.setText("Score: " + score);
+            gameLabel.setTextFill(Color.GREEN);
+            gameLabel.setText("You defused all the bombs");
             System.out.println("Score: " + score);
             System.out.println("You defused all the bombs");
         }
@@ -264,6 +286,27 @@ public class GameBoard implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         createContent();
+        restartButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+                try {
+                    Stage stage = (Stage) restartButton.getScene().getWindow();
+                    stage.close();
+
+                    //Set new controller and pass game
+                    FXMLLoader loader = new FXMLLoader((getClass().getResource("/Pane.fxml")));
+                    GameBoard gameBoard = new GameBoard(difficulty);
+                    loader.setController(gameBoard);
+
+                    //Set stage with new scene
+                    Parent root = loader.load();
+                    Scene scene = new Scene(root);
+                    stage.setScene(scene);
+                    stage.show();
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
+            }
+        });
     }
 
 }
