@@ -6,8 +6,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -35,6 +38,15 @@ public class GameBoard implements Initializable {
 
     @FXML
     public MenuItem menuButton;
+
+    @FXML
+    public Button restartButton;
+
+    @FXML
+    public Label pointLabel;
+
+    @FXML
+    public Label gameLabel;
 
 
     private static final int TILE_SIZE = 40;
@@ -117,14 +129,32 @@ public class GameBoard implements Initializable {
         return neighbors;
     }
 
+    @FXML
+    public void restart(MouseEvent event) {
+        if (event.getSource() == restartButton)
+            try {
+                Parent root = FXMLLoader.load(getClass().getResource("/Pane.fxml"));
+
+                Scene scene = new Scene(root);
+                Stage stage = new Stage();
+                stage.setScene(scene);
+                Stage stage2 = (Stage) gamePane.getScene().getWindow();
+                stage2.close();
+                stage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+    }
+
     private class Tile extends StackPane {
-        private int x, y;
+        private final int x;
+        private final int y;
         private final boolean hasBomb;
         private boolean isOpen = false;
         private boolean isFlagged;
 
-        private Rectangle border = new Rectangle(TILE_SIZE - 2, TILE_SIZE - 2);
-        private Text text = new Text();
+        private final Rectangle border = new Rectangle(TILE_SIZE - 2, TILE_SIZE - 2);
+        private final Text text = new Text();
 
         public Tile(int x, int y, boolean hasBomb, boolean isFlagged) {
             this.x = x;
@@ -159,17 +189,6 @@ public class GameBoard implements Initializable {
                     }
                 }
             });
-        }
-
-        private void reload() throws IOException {
-            Parent root = FXMLLoader.load(getClass().getResource("/Pane.fxml"));
-
-            Scene scene = new Scene(root);
-            Stage stage = new Stage();
-            stage.setScene(scene);
-            Stage stage2 = (Stage) gamePane.getScene().getWindow();
-            stage2.close();
-            stage.show();
         }
 
         public void open() {
@@ -217,13 +236,20 @@ public class GameBoard implements Initializable {
 
         public void gameOver() {
             gameOver = true;
-            getNeighbors(this).forEach(Tile::open);
+            pointLabel.setTextFill(Color.GREEN);
+            pointLabel.setText("Score: " + score);
+            gameLabel.setTextFill(Color.TOMATO);
+            gameLabel.setText("Game Over");
             System.out.println("Score: " + score);
             System.out.println("Game Over");
         }
 
         public void win() {
             gameOver = true;
+            pointLabel.setTextFill(Color.GREEN);
+            pointLabel.setText("Score: " + score);
+            gameLabel.setTextFill(Color.GREEN);
+            gameLabel.setText("You defused all the bombs");
             System.out.println("Score: " + score);
             System.out.println("You defused all the bombs");
         }
