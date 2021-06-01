@@ -1,6 +1,8 @@
 package edu.agile.Controllers;
 
+import edu.agile.Models.Difficulty;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -50,21 +52,32 @@ public class GameBoard implements Initializable {
 
 
     private static final int TILE_SIZE = 40;
-    private static final int WINDOW_WIDTH = 800;
-    private static final int GAME_HEIGHT = 600;
+    private final int WINDOW_WIDTH;
+    private final int GAME_HEIGHT;
     private static final int MENU_HEIGHT = 25;
 
-    private static final int X_TILES = WINDOW_WIDTH / TILE_SIZE;
-    private static final int Y_TILES = GAME_HEIGHT / TILE_SIZE;
+    private final int X_TILES;
+    private final int Y_TILES;
 
 
-    private final Tile[][] grid = new Tile[X_TILES][Y_TILES];
+    private final Tile[][] grid;
     private Scene scene;
 
     public int bombs = 0;
     public int flaggedBombs = 0;
     public boolean gameOver = false;
     public int score = 0;
+
+    public Difficulty difficulty;
+
+    public GameBoard(Difficulty difficulty) {
+        this.difficulty = difficulty;
+        this.WINDOW_WIDTH = difficulty.getWidth();
+        this.GAME_HEIGHT = difficulty.getHeight();
+        this.X_TILES = WINDOW_WIDTH / TILE_SIZE;
+        this.Y_TILES = GAME_HEIGHT / TILE_SIZE;
+        this.grid = new Tile[X_TILES][Y_TILES];
+    }
 
     private Parent createContent() {
         gamePane.setPrefSize(WINDOW_WIDTH, GAME_HEIGHT);
@@ -127,23 +140,6 @@ public class GameBoard implements Initializable {
         }
 
         return neighbors;
-    }
-
-    @FXML
-    public void restart(MouseEvent event) {
-        if (event.getSource() == restartButton)
-            try {
-                Parent root = FXMLLoader.load(getClass().getResource("/Pane.fxml"));
-
-                Scene scene = new Scene(root);
-                Stage stage = new Stage();
-                stage.setScene(scene);
-                Stage stage2 = (Stage) gamePane.getScene().getWindow();
-                stage2.close();
-                stage.show();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
     }
 
     private class Tile extends StackPane {
@@ -290,6 +286,27 @@ public class GameBoard implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         createContent();
+        restartButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+                try {
+                    Stage stage = (Stage) restartButton.getScene().getWindow();
+                    stage.close();
+
+                    //Set new controller and pass game
+                    FXMLLoader loader = new FXMLLoader((getClass().getResource("/Pane.fxml")));
+                    GameBoard gameBoard = new GameBoard(difficulty);
+                    loader.setController(gameBoard);
+
+                    //Set stage with new scene
+                    Parent root = loader.load();
+                    Scene scene = new Scene(root);
+                    stage.setScene(scene);
+                    stage.show();
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
+            }
+        });
     }
 
 }
