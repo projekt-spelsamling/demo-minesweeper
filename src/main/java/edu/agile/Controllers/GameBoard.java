@@ -1,10 +1,12 @@
 package edu.agile.Controllers;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.MenuItem;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -22,22 +24,33 @@ import java.util.ResourceBundle;
 public class GameBoard implements Initializable {
 
     @FXML
-    public Pane gamePane = new Pane();
+    public Pane gamePane;
+
+    @FXML
+    public Pane menuPane;
+
+    @FXML
+    public MenuItem exitButton;
+
+    @FXML
+    public MenuItem menuButton;
 
 
     private static final int TILE_SIZE = 40;
-    private static final int W = 800;
-    private static final int H = 600;
+    private static final int WINDOW_WIDTH = 800;
+    private static final int GAME_HEIGHT = 600;
+    private static final int MENU_HEIGHT = 25;
 
-    private static final int X_TILES = W / TILE_SIZE;
-    private static final int Y_TILES = H / TILE_SIZE;
+    private static final int X_TILES = WINDOW_WIDTH / TILE_SIZE;
+    private static final int Y_TILES = GAME_HEIGHT / TILE_SIZE;
 
 
     private Tile[][] grid = new Tile[X_TILES][Y_TILES];
     private Scene scene;
 
     private Parent createContent(){
-        gamePane.setPrefSize(W,H);
+        gamePane.setPrefSize(WINDOW_WIDTH, GAME_HEIGHT);
+        menuPane.setPrefSize(WINDOW_WIDTH, GAME_HEIGHT + MENU_HEIGHT);
 
         for(int y = 0; y < Y_TILES; y++){
             for(int x = 0; x < X_TILES; x++){
@@ -158,6 +171,37 @@ public class GameBoard implements Initializable {
 
             if(text.getText().isEmpty()){
                 getNeighbors(this).forEach(Tile::open);
+            }
+        }
+    }
+
+    @FXML
+    public void menuButtonAction(ActionEvent event) {
+        if (event.getSource() == menuButton) {
+            try {
+                Parent root = FXMLLoader.load(getClass().getResource("/Menu.fxml"));
+
+                Scene scene = new Scene(root);
+                Stage stage = new Stage();
+                stage.setScene(scene);
+                Stage stage2 = (Stage) gamePane.getScene().getWindow();
+                stage2.close();
+                stage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+    @FXML
+    public void exitButtonAction(ActionEvent event) {
+        if (event.getSource() == exitButton) {
+            try {
+                Stage stage = (Stage) gamePane.getScene().getWindow();
+                stage.close();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
     }
