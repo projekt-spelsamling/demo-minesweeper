@@ -20,7 +20,7 @@ public class App extends Application {
 
 
         Scene scene = new Scene(root);
-        stage.setTitle("Minesweeper");
+        stage.setTitle("Newton Minesweeper");
         stage.setScene(scene);
         stage.show();
     }

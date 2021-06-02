@@ -1,6 +1,8 @@
 package edu.agile.Controllers;
 
 import edu.agile.Models.Difficulty;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -12,7 +14,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -20,6 +21,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.net.URL;
@@ -45,16 +47,25 @@ public class GameBoard implements Initializable {
     public Button restartButton;
 
     @FXML
+    public Button startTimerButton;
+
+    @FXML
     public Label pointLabel;
 
     @FXML
     public Label gameLabel;
+
+    @FXML
+    public Label timerLabel;
 
 
     private static final int TILE_SIZE = 40;
     private final int WINDOW_WIDTH;
     private final int GAME_HEIGHT;
     private static final int MENU_HEIGHT = 25;
+    private final Integer START_TIME = 90;
+
+    private Integer seconds = START_TIME;
 
     private final int X_TILES;
     private final int Y_TILES;
@@ -112,6 +123,7 @@ public class GameBoard implements Initializable {
 
         return gamePane;
     }
+    
 
     private List<Tile> getNeighbors(Tile tile) {
         List<Tile> neighbors = new ArrayList<>();
@@ -174,7 +186,7 @@ public class GameBoard implements Initializable {
             setTranslateY(y * TILE_SIZE);
 
             setOnMouseClicked(e -> {
-                if(!gameOver) {
+                if (!gameOver) {
                     if (e.getButton() == MouseButton.PRIMARY) {
                         if (!this.isFlagged) {
                             open();
@@ -188,7 +200,7 @@ public class GameBoard implements Initializable {
         }
 
         public void open() {
-            if(isOpen) {
+            if (isOpen) {
                 return;
             }
 
@@ -211,15 +223,15 @@ public class GameBoard implements Initializable {
                 return;
             }
 
-            if(isFlagged){
-                if(hasBomb){
-                    flaggedBombs --;
+            if (isFlagged) {
+                if (hasBomb) {
+                    flaggedBombs--;
                 }
                 isFlagged = false;
                 border.setFill(Color.BLACK);
             } else {
-                if(hasBomb){
-                    flaggedBombs ++;
+                if (hasBomb) {
+                    flaggedBombs++;
                 }
                 isFlagged = true;
                 border.setFill(Color.RED);
@@ -249,6 +261,7 @@ public class GameBoard implements Initializable {
             System.out.println("Score: " + score);
             System.out.println("You defused all the bombs");
         }
+        
     }
 
 
@@ -270,7 +283,6 @@ public class GameBoard implements Initializable {
         }
     }
 
-
     @FXML
     public void exitButtonAction(ActionEvent event) {
         if (event.getSource() == exitButton) {
@@ -283,9 +295,46 @@ public class GameBoard implements Initializable {
         }
     }
 
+    private void timer() {
+        startTimerButton.setText("START");
+        timerLabel.setTextFill(Color.TOMATO);
+        timerLabel.setText(seconds.toString());
+        Timeline time = new Timeline();
+        time.setCycleCount(Timeline.INDEFINITE);
+        if (time != null){
+            time.stop();
+        }
+        KeyFrame frame = new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+
+                seconds--;
+                timerLabel.setText(seconds.toString());
+
+                if (seconds <= 0) {
+                    time.stop();
+                    gameOver();
+                }
+            }
+
+            private void gameOver() {
+                gameOver = true;
+                pointLabel.setTextFill(Color.GREEN);
+                pointLabel.setText("Score: " + score);
+                gameLabel.setTextFill(Color.TOMATO);
+                gameLabel.setText("Game Over");
+                System.out.println("Score: " + score);
+                System.out.println("Game Over");
+            }
+        });
+        time.getKeyFrames().add(frame);
+        time.playFromStart();
+    }
+    
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         createContent();
+        timer();
         restartButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
                 try {
@@ -308,6 +357,5 @@ public class GameBoard implements Initializable {
             }
         });
     }
-
 }
 
