@@ -14,6 +14,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -78,6 +79,7 @@ public class GameBoard implements Initializable {
     public int flaggedBombs = 0;
     public boolean gameOver = false;
     public int score = 0;
+    public boolean started = false;
 
     public Difficulty difficulty;
 
@@ -257,7 +259,7 @@ public class GameBoard implements Initializable {
             pointLabel.setTextFill(Color.GREEN);
             pointLabel.setText("Score: " + score);
             gameLabel.setTextFill(Color.GREEN);
-            gameLabel.setText("You defused all the bombs");
+            gameLabel.setText("You Won!");
             System.out.println("Score: " + score);
             System.out.println("You defused all the bombs");
         }
@@ -296,7 +298,7 @@ public class GameBoard implements Initializable {
     }
 
     private void timer() {
-        startTimerButton.setText("START");
+        startTimerButton.setText("STOP");
         timerLabel.setTextFill(Color.TOMATO);
         timerLabel.setText(seconds.toString());
         Timeline time = new Timeline();
@@ -304,16 +306,32 @@ public class GameBoard implements Initializable {
         if (time != null){
             time.stop();
         }
-        KeyFrame frame = new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
+        KeyFrame frame = new KeyFrame(Duration.seconds(1), new EventHandler<>() {
             @Override
             public void handle(ActionEvent event) {
-
+                startTimerButton.addEventHandler(MouseEvent.MOUSE_CLICKED, event1 -> {
+                    if (event1.getSource() == startTimerButton) {
+                        if (!started) {
+                            started = true;
+                            startTimerButton.setText("START");
+                            time.stop();
+                        } else {
+                            started = false;
+                            startTimerButton.setText("STOP");
+                            time.play();
+                        }
+                    }
+                });
                 seconds--;
                 timerLabel.setText(seconds.toString());
 
                 if (seconds <= 0) {
-                    time.stop();
                     gameOver();
+                    time.stop();
+                }
+
+                if (gameOver) {
+                    time.stop();
                 }
             }
 
@@ -335,8 +353,9 @@ public class GameBoard implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         createContent();
         timer();
-        restartButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override public void handle(ActionEvent e) {
+        restartButton.setOnAction(new EventHandler<>() {
+            @Override
+            public void handle(ActionEvent e) {
                 try {
                     Stage stage = (Stage) restartButton.getScene().getWindow();
                     stage.close();
