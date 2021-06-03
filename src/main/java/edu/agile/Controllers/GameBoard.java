@@ -315,10 +315,12 @@ public class GameBoard implements Initializable {
                             started = true;
                             startTimerButton.setText("START");
                             time.stop();
+                            gamePane.setVisible(false);
                         } else {
                             started = false;
                             startTimerButton.setText("STOP");
                             time.play();
+                            gamePane.setVisible(true);
                         }
                     }
                 });
