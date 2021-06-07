@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -40,6 +41,7 @@
           <Menu mnemonicParsing="false" text="Menu">
             <items>
               <MenuItem fx:id="menuButton" mnemonicParsing="false" onAction="#menuButtonAction" text="Main Menu" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem fx:id="exitButton" mnemonicParsing="false" onAction="#exitButtonAction" text="Exit" />
             </items>
           </Menu>

@@ -48,6 +48,7 @@ public class Menu {
                 Scene scene = new Scene(root);
                 Stage stage = new Stage();
                 stage.setScene(scene);
+                stage.setTitle("Newton Minesweeper");
                 Stage stage2 = (Stage) exitButton.getScene().getWindow();
                 stage2.close();
                 stage.show();
@@ -83,6 +84,7 @@ public class Menu {
         Parent root = loader.load();
         Scene scene = new Scene(root);
         stage.setScene(scene);
+        stage.setTitle("Newton Minesweeper");
         stage.show();
     }
 }
