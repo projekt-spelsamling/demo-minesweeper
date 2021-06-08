@@ -6,31 +6,48 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="540.0" prefWidth="705.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.agile.Controllers.Menu">
-   <children>
-      <AnchorPane layoutX="-12.0" layoutY="-6.0" prefHeight="553.0" prefWidth="723.0" style="-fx-background-color: #eb7102;">
-         <children>
-            <ImageView fitHeight="163.0" fitWidth="513.0" layoutX="105.0" layoutY="37.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@newtonminesweeper.jpg" />
-               </image>
-            </ImageView>
-            <Button fx:id="startButton" layoutX="289.0" layoutY="170.0" mnemonicParsing="false" onMouseClicked="#startButtonAction" prefHeight="45.0" prefWidth="145.0" style="-fx-background-color: #ba7b36;" text="Quick Start" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-            </Button>
-            <Button fx:id="customButton" layoutX="289.0" layoutY="254.0" mnemonicParsing="false" onMouseClicked="#customButtonAction" prefHeight="45.0" prefWidth="145.0" style="-fx-background-color: #ba7b36;" text="Custom Game" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-            </Button>
-            <Button fx:id="exitButton" layoutX="289.0" layoutY="337.0" mnemonicParsing="false" onMouseClicked="#exitButtonAction" prefHeight="45.0" prefWidth="145.0" style="-fx-background-color: #ba7b36;" text="Exit" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-            </Button>
-         </children>
-      </AnchorPane>
-   </children>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="540.0"
+            prefWidth="705.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="edu.agile.Controllers.Menu">
+    <children>
+        <AnchorPane layoutX="-12.0" layoutY="-6.0" prefHeight="553.0" prefWidth="723.0"
+                    style="-fx-background-color: #eb7102;">
+            <children>
+                <ImageView fitHeight="163.0" fitWidth="513.0" layoutX="105.0" layoutY="37.0" pickOnBounds="true"
+                           preserveRatio="true">
+                    <image>
+                        <Image url="@newtonminesweeper.jpg"/>
+                    </image>
+                </ImageView>
+                <Button fx:id="startButton" layoutX="289.0" layoutY="170.0" mnemonicParsing="false"
+                        onMouseClicked="#startButtonAction" prefHeight="45.0" prefWidth="145.0"
+                        style="-fx-background-color: #ba7b36;" text="Quick Start" textFill="WHITE">
+                    <font>
+                        <Font name="System Bold" size="12.0"/>
+                    </font>
+                </Button>
+                <Button fx:id="customButton" layoutX="289.0" layoutY="254.0" mnemonicParsing="false"
+                        onMouseClicked="#customButtonAction" prefHeight="45.0" prefWidth="145.0"
+                        style="-fx-background-color: #ba7b36;" text="Custom Game" textFill="WHITE">
+                    <font>
+                        <Font name="System Bold" size="12.0"/>
+                    </font>
+                </Button>
+                <Button fx:id="exitButton" layoutX="289.0" layoutY="415.0" mnemonicParsing="false"
+                        onMouseClicked="#exitButtonAction" prefHeight="45.0" prefWidth="145.0"
+                        style="-fx-background-color: #ba7b36;" text="Exit" textFill="WHITE">
+                    <font>
+                        <Font name="System Bold" size="12.0"/>
+                    </font>
+                </Button>
+                <Button fx:id="showHighScore" layoutX="289.0" layoutY="334.0" mnemonicParsing="false"
+                        onMouseClicked="#showHighScore" prefHeight="45.0" prefWidth="145.0"
+                        style="-fx-background-color: #ba7b36;" text="High Score" textFill="WHITE">
+                    <font>
+                        <Font name="System Bold" size="12.0"/>
+                    </font>
+                </Button>
+            </children>
+        </AnchorPane>
+    </children>
 </AnchorPane>

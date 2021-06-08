@@ -10,14 +10,19 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class Menu {
+    public static final String FXML_HIGH_SCORE = "/highscore.fxml";
 
     @FXML
     public Button startButton;
 
     @FXML
     public Button customButton;
+
+    @FXML
+    public Button showHighScore;
 
     @FXML
     public Button exitButton;
@@ -40,10 +45,10 @@ public class Menu {
 
 
     @FXML
-    public void customButtonAction (MouseEvent event){
+    public void customButtonAction(MouseEvent event) {
         if (event.getSource() == customButton) {
             try {
-                Parent root = FXMLLoader.load(getClass().getResource("/GameMenu.fxml"));
+                Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/GameMenu.fxml")));
 
                 Scene scene = new Scene(root);
                 Stage stage = new Stage();
@@ -60,7 +65,7 @@ public class Menu {
     }
 
     @FXML
-    public void exitButtonAction (MouseEvent event){
+    public void exitButtonAction(MouseEvent event) {
         if (event.getSource() == exitButton) {
             try {
                 Stage stage = (Stage) exitButton.getScene().getWindow();
@@ -71,7 +76,7 @@ public class Menu {
         }
     }
 
-    public void startGame (Difficulty difficulty) throws IOException {
+    public void startGame(Difficulty difficulty) throws IOException {
         Stage stage = (Stage) startButton.getScene().getWindow();
         stage.close();
 
@@ -86,6 +91,22 @@ public class Menu {
         stage.setScene(scene);
         stage.setTitle("Newton Minesweeper");
         stage.show();
+    }
+
+    public void showHighScore(MouseEvent mouseEvent) {
+        try {
+            Stage stage = (Stage) showHighScore.getScene().getWindow();
+            stage.close();
+
+            FXMLLoader loader = new FXMLLoader((getClass().getResource(FXML_HIGH_SCORE)));
+
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
 
