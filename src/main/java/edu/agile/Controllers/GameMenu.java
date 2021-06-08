@@ -97,21 +97,21 @@ public class GameMenu {
 
     @FXML
     public void menuButtonAction(ActionEvent event) {
-    if (event.getSource() == menuButton) {
-        try {
-            Parent root = FXMLLoader.load(getClass().getResource("/Menu.fxml"));
+        if (event.getSource() == menuButton) {
+            try {
+                Parent root = FXMLLoader.load(getClass().getResource("/Menu.fxml"));
 
-            Scene scene = new Scene(root);
-            Stage stage = new Stage();
-            stage.setScene(scene);
-            Stage stage2 = (Stage) easyButton.getScene().getWindow();
-            stage2.close();
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
+                Scene scene = new Scene(root);
+                Stage stage = new Stage();
+                stage.setScene(scene);
+                Stage stage2 = (Stage) easyButton.getScene().getWindow();
+                stage2.close();
+                stage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
-}
 
 
     @FXML
@@ -120,8 +120,7 @@ public class GameMenu {
             try {
                 Stage stage = (Stage) easyButton.getScene().getWindow();
                 stage.close();
-            }
-            catch(Exception e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }

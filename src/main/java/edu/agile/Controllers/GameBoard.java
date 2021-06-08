@@ -31,28 +31,25 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class GameBoard implements Initializable {
+    private static final String GAME_NAME = "Minesweeper";
+    private static final int TILE_SIZE = 40;
+    private static final int MENU_HEIGHT = 25;
 
     @FXML
     public Pane gamePane;
-
     @FXML
     public Pane menuPane;
-
     @FXML
     public MenuItem exitButton;
-
     @FXML
     public MenuItem menuButton;
-
     @FXML
     public Button restartButton;
-
     @FXML
     public Button startTimerButton;
 
     @FXML
     public Label pointLabel;
-
     @FXML
     public Label gameLabel;
 
@@ -60,27 +57,21 @@ public class GameBoard implements Initializable {
     public Label timerLabel;
 
 
-    private static final int TILE_SIZE = 40;
     private final int WINDOW_WIDTH;
     private final int GAME_HEIGHT;
-    private static final int MENU_HEIGHT = 25;
     private final Integer START_TIME = 90;
 
     private Integer seconds = START_TIME;
 
     private final int X_TILES;
     private final int Y_TILES;
-
-
     private final Tile[][] grid;
     private Scene scene;
-
     public int bombs = 0;
     public int flaggedBombs = 0;
     public boolean gameOver = false;
-    public int score = 0;
     public boolean started = false;
-
+    public int points = 0;
     public Difficulty difficulty;
 
     public GameBoard(Difficulty difficulty) {
@@ -125,7 +116,7 @@ public class GameBoard implements Initializable {
 
         return gamePane;
     }
-    
+
 
     private List<Tile> getNeighbors(Tile tile) {
         List<Tile> neighbors = new ArrayList<>();
@@ -206,14 +197,15 @@ public class GameBoard implements Initializable {
                 return;
             }
 
+            text.setVisible(true);
+            border.setFill(null);
+            isOpen = true;
+
             if (hasBomb) {
                 gameOver();
             }
 
-            isOpen = true;
-            text.setVisible(true);
-            border.setFill(null);
-            score += 100;
+            points += 100;
 
             if (text.getText().isEmpty()) {
                 getNeighbors(this).forEach(Tile::open);
@@ -247,23 +239,27 @@ public class GameBoard implements Initializable {
         public void gameOver() {
             gameOver = true;
             pointLabel.setTextFill(Color.GREEN);
-            pointLabel.setText("Score: " + score);
+            pointLabel.setText("Score: " + points);
             gameLabel.setTextFill(Color.TOMATO);
             gameLabel.setText("Game Over");
-            System.out.println("Score: " + score);
-            System.out.println("Game Over");
+
+            SubmitScore submitScore = new SubmitScore(GAME_NAME, points);
+            submitScore.display("You lost!");
+
+
         }
 
         public void win() {
             gameOver = true;
             pointLabel.setTextFill(Color.GREEN);
-            pointLabel.setText("Score: " + score);
+            pointLabel.setText("Score: " + points);
             gameLabel.setTextFill(Color.GREEN);
-            gameLabel.setText("You Won!");
-            System.out.println("Score: " + score);
-            System.out.println("You defused all the bombs");
+            gameLabel.setText("You defused all the bombs");
+
+            SubmitScore submitScore = new SubmitScore(GAME_NAME, points);
+            submitScore.display("You won!");
         }
-        
+
     }
 
 
@@ -340,43 +336,45 @@ public class GameBoard implements Initializable {
             private void gameOver() {
                 gameOver = true;
                 pointLabel.setTextFill(Color.GREEN);
-                pointLabel.setText("Score: " + score);
+                pointLabel.setText("Score: " + points);
                 gameLabel.setTextFill(Color.TOMATO);
                 gameLabel.setText("Game Over");
-                System.out.println("Score: " + score);
+                System.out.println("Score: " + points);
                 System.out.println("Game Over");
+                SubmitScore submitScore = new SubmitScore(GAME_NAME, points);
+                submitScore.display("Time is up!");
             }
         });
         time.getKeyFrames().add(frame);
         time.playFromStart();
     }
-    
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         createContent();
         timer();
         restartButton.setOnAction(new EventHandler<>() {
-            @Override
-            public void handle(ActionEvent e) {
-                try {
-                    Stage stage = (Stage) restartButton.getScene().getWindow();
-                    stage.close();
+                @Override
+                public void handle(ActionEvent e) {
+                    try {
+                        Stage stage = (Stage) restartButton.getScene().getWindow();
+                        stage.close();
 
-                    //Set new controller and pass game
-                    FXMLLoader loader = new FXMLLoader((getClass().getResource("/Pane.fxml")));
-                    GameBoard gameBoard = new GameBoard(difficulty);
-                    loader.setController(gameBoard);
+                        //Set new controller and pass game
+                        FXMLLoader loader = new FXMLLoader((getClass().getResource("/Pane.fxml")));
+                        GameBoard gameBoard = new GameBoard(difficulty);
+                        loader.setController(gameBoard);
 
-                    //Set stage with new scene
-                    Parent root = loader.load();
-                    Scene scene = new Scene(root);
-                    stage.setScene(scene);
-                    stage.show();
-                } catch (IOException ioException) {
-                    ioException.printStackTrace();
+                        //Set stage with new scene
+                        Parent root = loader.load();
+                        Scene scene = new Scene(root);
+                        stage.setScene(scene);
+                        stage.show();
+                    } catch (IOException ioException) {
+                        ioException.printStackTrace();
+                    }
                 }
-            }
-        });
+            });
+        }
     }
-}
 

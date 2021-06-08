@@ -13,7 +13,7 @@ import javafx.stage.Stage;
 public class App extends Application {
 
     @Override
-    public void start(Stage stage) throws Exception{
+    public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("/Menu.fxml"));
 
 

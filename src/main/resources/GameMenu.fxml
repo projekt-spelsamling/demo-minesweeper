@@ -10,6 +10,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
+<<<<<<< HEAD
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="540.0" prefWidth="705.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.agile.Controllers.GameMenu">
    <children>
       <AnchorPane fx:id="loginPane" layoutX="-12.0" layoutY="-6.0" prefHeight="553.0" prefWidth="723.0" style="-fx-background-color: #eb7102;">
@@ -48,4 +49,54 @@
         </menus>
       </MenuBar>
    </children>
+=======
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="540.0"
+            prefWidth="705.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="edu.agile.Controllers.GameMenu">
+    <children>
+        <AnchorPane fx:id="loginPane" layoutX="-12.0" layoutY="-6.0" prefHeight="553.0" prefWidth="723.0"
+                    style="-fx-background-color: #eb7102;">
+            <children>
+                <ImageView fitHeight="163.0" fitWidth="513.0" layoutX="105.0" layoutY="37.0" pickOnBounds="true"
+                           preserveRatio="true">
+                    <image>
+                        <Image url="@newtonminesweeper.jpg"/>
+                    </image>
+                </ImageView>
+                <Button fx:id="easyButton" layoutX="289.0" layoutY="170.0" mnemonicParsing="false"
+                        onMouseClicked="#easyButtonAction" prefHeight="45.0" prefWidth="145.0"
+                        style="-fx-background-color: #ba7b36;" text="Easy" textFill="WHITE">
+                    <font>
+                        <Font name="System Bold" size="15.0"/>
+                    </font>
+                </Button>
+                <Button fx:id="mediumButton" layoutX="289.0" layoutY="254.0" mnemonicParsing="false"
+                        onMouseClicked="#mediumButtonAction" prefHeight="45.0" prefWidth="145.0"
+                        style="-fx-background-color: #ba7b36;" text="Medium" textFill="WHITE">
+                    <font>
+                        <Font name="System Bold" size="15.0"/>
+                    </font>
+                </Button>
+                <Button fx:id="hardButton" layoutX="289.0" layoutY="337.0" mnemonicParsing="false"
+                        onMouseClicked="#hardButtonAction" prefHeight="45.0" prefWidth="145.0"
+                        style="-fx-background-color: #ba7b36;" text="Hard" textFill="WHITE">
+                    <font>
+                        <Font name="System Bold" size="15.0"/>
+                    </font>
+                </Button>
+            </children>
+        </AnchorPane>
+        <MenuBar>
+            <menus>
+                <Menu mnemonicParsing="false" text="Menu">
+                    <items>
+                        <MenuItem fx:id="menuButton" mnemonicParsing="false" onAction="#menuButtonAction"
+                                  text="Main Menu"/>
+                        <MenuItem fx:id="exitButton" mnemonicParsing="false" onAction="#exitButtonAction" text="Exit"/>
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+    </children>
+>>>>>>> 7398f7f... Submit score and view highscore
 </AnchorPane>
