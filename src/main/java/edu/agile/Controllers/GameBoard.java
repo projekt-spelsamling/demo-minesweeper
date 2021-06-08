@@ -52,23 +52,8 @@ public class GameBoard implements Initializable {
     @FXML
     public Label gameLabel;
 
-<<<<<<< HEAD
-    @FXML
-    public Label timerLabel;
-
-
-    private static final int TILE_SIZE = 40;
     private final int WINDOW_WIDTH;
     private final int GAME_HEIGHT;
-    private static final int MENU_HEIGHT = 25;
-    private final Integer START_TIME = 90;
-
-    private Integer seconds = START_TIME;
-
-=======
-    private final int WINDOW_WIDTH;
-    private final int GAME_HEIGHT;
->>>>>>> 7398f7f... Submit score and view highscore
     private final int X_TILES;
     private final int Y_TILES;
     private final Tile[][] grid;
@@ -76,13 +61,7 @@ public class GameBoard implements Initializable {
     public int bombs = 0;
     public int flaggedBombs = 0;
     public boolean gameOver = false;
-<<<<<<< HEAD
-    public int score = 0;
-    public boolean started = false;
-
-=======
     public int points = 0;
->>>>>>> 7398f7f... Submit score and view highscore
     public Difficulty difficulty;
 
     public GameBoard(Difficulty difficulty) {
@@ -265,16 +244,10 @@ public class GameBoard implements Initializable {
             pointLabel.setTextFill(Color.GREEN);
             pointLabel.setText("Score: " + points);
             gameLabel.setTextFill(Color.GREEN);
-<<<<<<< HEAD
-            gameLabel.setText("You Won!");
-            System.out.println("Score: " + score);
-            System.out.println("You defused all the bombs");
-=======
             gameLabel.setText("You defused all the bombs");
 
             SubmitScore submitScore = new SubmitScore(GAME_NAME, points);
             submitScore.display("Du vann!");
->>>>>>> 7398f7f... Submit score and view highscore
         }
         
     }
@@ -367,12 +340,7 @@ public class GameBoard implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         createContent();
-<<<<<<< HEAD
-        timer();
-        restartButton.setOnAction(new EventHandler<>() {
-=======
         restartButton.setOnAction(new EventHandler<ActionEvent>() {
->>>>>>> 7398f7f... Submit score and view highscore
             @Override
             public void handle(ActionEvent e) {
                 try {
