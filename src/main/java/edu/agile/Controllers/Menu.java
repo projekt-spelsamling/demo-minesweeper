@@ -48,7 +48,7 @@ public class Menu {
     public void customButtonAction(MouseEvent event) {
         if (event.getSource() == customButton) {
             try {
-                Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/GameMenu.fxml")));
+                Parent root = FXMLLoader.load(getClass().getResource("/GameMenu.fxml"));
 
                 Scene scene = new Scene(root);
                 Stage stage = new Stage();
