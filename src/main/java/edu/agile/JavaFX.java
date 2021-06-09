@@ -10,7 +10,7 @@ import javafx.stage.Stage;
 /**
  * JavaFX App
  */
-public class App extends Application {
+public class JavaFX extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -23,7 +23,7 @@ public class App extends Application {
         stage.show();
     }
 
-    public static void main(String[] args) {
+    public static void runJavaFX(String[] args) {
         launch();
     }
 
